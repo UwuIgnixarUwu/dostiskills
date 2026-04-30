@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOSTI Skills 2026</title>
+    <style>
+        :root {
+            --primary-blue: #003366; /* Темно-синий фон в стиле ваших предпочтений */
+            --accent-gold: #ffd700;
+            --text-white: #ffffff;
+            --bg-light: #f4f4f4;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-light);
+            color: #333;
+        }
+
+        /* Шапка сайта */
+        header {
+            background-color: var(--primary-blue);
+            color: var(--text-white);
+            padding: 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .lang-switch {
+            margin-top: 10px;
+        }
+
+        .lang-switch button {
+            background: transparent;
+            border: 1px solid white;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .lang-switch button.active {
+            background: var(--accent-gold);
+            color: var(--primary-blue);
+            border-color: var(--accent-gold);
+        }
+
+        /* Навигация по датам (Горизонтальный скролл для мобильных) */
+        .date-nav {
+            display: flex;
+            overflow-x: auto;
+            background: #fff;
+            border-bottom: 1px solid #ddd;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .date-nav button {
+            flex: 0 0 auto;
+            padding: 15px 20px;
+            border: none;
+            background: none;
+            font-weight: bold;
+            color: #666;
+        }
+
+        .date-nav button.active {
+            color: var(--primary-blue);
+            border-bottom: 3px solid var(--primary-blue);
+        }
+
+        /* Контент программы */
+        .container {
+            padding: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .event-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .time {
+            font-weight: bold;
+            color: var(--primary-blue);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .location {
+            font-size: 0.9em;
+            color: #d9534f;
+            margin-top: 5px;
+        }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1 id="main-title">DOSTI Skills 2026</h1>
+    <div class="lang-switch">
+        <button onclick="setLang('ru')" id="btn-ru" class="active">RU</button>
+        <button onclick="setLang('kz')" id="btn-kz">KZ</button>
+        <button onclick="setLang('en')" id="btn-en">EN</button>
+    </div>
+</header>
+
+<nav class="date-nav" id="date-tabs">
+    <!-- Кнопки дат генерируются скриптом -->
+</nav>
+
+<div class="container" id="schedule-content">
+    <!-- Сюда подгружается программа -->
+</div>
+
+<script>
+    // 1. ДАННЫЕ (Вы можете дополнять этот массив информацией из PDF)
+    const scheduleData = {
+    ru: {
+        days: [
+            { date: "12-13 мая", code: "C-6/C-5", events: [
+                { time: "Весь период", title: "День прибытия экспертов, участников и приглашённых гостей. Встреча иностранных гостей и трансфера до апартаментов", loc: "Апартаменты" }
+            ]},
+            { date: "14 мая", code: "C-4", events: [
+                { time: "До начала мастер-классов", title: "Прибытие экспертов, участников и приглашённых гостей на площадки проведения мастер-классов", loc: "ул. Ж. Жабаева, 144 / ул. Ж. Жабаева, 175 / ул. Ж. Ташенова, 115" },
+                { time: "11.00-13.00", title: "«Электроника» — Methods of training competitors in WorldSkills International countries", loc: "ул. Ж. Жабаева, 144" },
+                { time: "10.00-13.00", title: "«Прототипирование» — Using alternative software. Autodesk Inventor for modeling and assembly", loc: "ул. Ж. Жабаева, 175" },
+                { time: "09.00-13.00", title: "«Беспилотные летательные системы» — Assembly and initial configuration of the WS500 UAV kit", loc: "ул. Ж. Ташенова, 115" },
+                { time: "13.00-14.00", title: "Обеденный перерыв", loc: "Площадки" },
+                { time: "14.00-17.00", title: "«Электроника» — From WorldSkills standards to a manufacturing product", loc: "ул. Ж. Жабаева, 144" },
+                { time: "14.00-16.00", title: "«Автономная мобильная робототехника» — Innovations in the structure and principles of the modules of the WSC2026 test project", loc: "ул. Ж. Жабаева, 144" },
+                { time: "17.00-19.00", title: "«Автономная мобильная робототехника» — Advantages and features of using the ROS2 ecosystem", loc: "ул. Ж. Жабаева, 144" },
+                { time: "14.00-17.00", title: "«Прототипирование» — Using alternative software. Autodesk Inventor for milling parts", loc: "ул. Ж. Жабаева, 175" },
+                { time: "14.00-18.00", title: "«Беспилотные летательные системы» — Programming of the autonomous control model of the WS500 UAV kit", loc: "ул. Ж. Ташенова, 115" },
+                { time: "18.00-19.00", title: "Вопросы и ответы Studica Robotics", loc: "Площадки" }
+            ]},
+            { date: "15 мая", code: "C-3", events: [
+                { time: "До начала мастер-классов", title: "Прибытие экспертов, участников и приглашённых гостей на площадки проведения мастер-классов", loc: "По адресам компетенций" },
+                { time: "10.00-13.00", title: "«Электроника» — Beyond the Competition but inside electronics: Designing 4-layer PCBs", loc: "ул. Ж. Жабаева, 144" },
+                { time: "10.00-13.00", title: "«Автономная мобильная робототехника» — Using SLAM (Simultaneous Localization and Mapping) to visualize the field map", loc: "ул. Ж. Жабаева, 144" },
+                { time: "10.00-13.00", title: "«Прототипирование» — Economics and commercialization of serial prototype printing, assembly and parts analysis", loc: "ул. Ж. Жабаева, 175" },
+                { time: "11.00-13.00", title: "«Беспилотные летательные системы» — Designing an additional modular design for UAVs", loc: "ул. Ж. Ташенова, 115" },
+                { time: "13.00-14.00", title: "Обеденный перерыв", loc: "Площадки" },
+                { time: "14.00-17.00", title: "«Электроника» — Hardware Software: Firmware as a hardware diagnostic tool", loc: "ул. Ж. Жабаева, 144" },
+                { time: "14.00-17.00", title: "«Автономная мобильная робототехника» — Creating machine vision algorithms using the ROS2 ecosystem", loc: "ул. Ж. Жабаева, 144" },
+                { time: "14.00-17.00", title: "«Прототипирование» — Alternative materials for the production of prototypes and products, design work and exchange of experience with partners", loc: "ул. Ж. Жабаева, 175" },
+                { time: "14.00-16.00", title: "«Беспилотные летательные системы» — Modification, customization and improvement of the WS500 UAV kit", loc: "ул. Ж. Ташенова, 115" },
+                { time: "16.30-17.30", title: "Вопросы и ответы с экспертами, обмен опытом", loc: "Площадки" }
+            ]},
+            { date: "16 мая", code: "C-2", events: [
+                { time: "09.00-13.00", title: "Знакомство с Конкурсными площадками по компетенциям", loc: "Площадки" },
+                { time: "13.00-14.00", title: "Обеденный перерыв", loc: "Площадки" },
+                { time: "15.00-16.30", title: "Торжественная церемония открытия Международного Товарищеского Отраслевого чемпионата «DOSTI Skills Kokshetau 2026»", loc: "Көкшетау" }
+            ]},
+            { date: "17 мая", code: "C-1", events: [
+                { time: "Весь период", title: "Организация культурно-развлекательной программы с выездом в Щучинско-Боровскую курортную зону для участников, экспертов и гостей", loc: "Бурабай" }
+            ]},
+            { date: "18 мая", code: "C1", events: [
+                { time: "09.00-13.00", title: "Проведение брифингов, модулей (Day C1 SMP) по компетенциям (Электроника, Робототехника, Прототипирование, БЛС)", loc: "Площадки" },
+                { time: "13.00-14.00", title: "Обеденный перерыв", loc: "Площадки" },
+                { time: "14.00-18.30", title: "Продолжение брифингов и модулей (Day C1 SMP): Электроника (до 17:30), Робототехника (до 18:30), Прототипирование (до 17:30), БЛС (до 18:30)", loc: "Площадки" }
+            ]},
+            { date: "19 мая", code: "C2", events: [
+                { time: "08.30-13.00", title: "Проведение брифингов, модулей (Day C2 SMP) по компетенциям", loc: "Площадки" },
+                { time: "13.00-14.00", title: "Обеденный перерыв", loc: "Площадки" },
+                { time: "14.00-19.00", title: "Проведение брифингов, модулей (Day C2 SMP) по компетенциям", loc: "Площадки" },
+                { time: "15.00-16.00", title: "Республиканский онлайн-семинар «Интеграция искусственного интеллекта в дуальное образование систем ТиПО и высших учебных заведений»", loc: "Онлайн" }
+            ]},
+            { date: "20 мая", code: "C3", events: [
+                { time: "09.00-13.00", title: "Проведение брифингов, модулей (Day C3 SMP) по компетенциям", loc: "Площадки" },
+                { time: "13.00-14.00", title: "Обеденный перерыв", loc: "Площадки" },
+                { time: "14.00-17.30", title: "Проведение брифингов, модулей (Day C3 SMP) по компетенциям", loc: "Площадки" }
+            ]},
+            { date: "21 мая", code: "C+1", events: [
+                { time: "11.00-12.30", title: "Торжественная церемония закрытия Международного Товарищеского Отраслевого чемпионата «DOSTI Skills Kokshetau 2026»", loc: "Көкшетау" },
+                { time: "12.30-14.00", title: "Фуршет для участников мероприятия", loc: "Место закрытия" }
+            ]},
+            { date: "22 мая", code: "C+2", events: [
+                { time: "Весь период", title: "День отъезда экспертов, участников и приглашённых гостей", loc: "Трансфер" }
+            ]}
+        ]
+    },
+    kz: {
+        days: [
+            { date: "12-13 мамыр", code: "C-6/C-5", events: [
+                { time: "Бүкіл кезең", title: "Сарапшылардың, қатысушылардың және шақырылған қонақтардың келу күні. Шетелдік конактарды қарсы алу және оларды апартаменттерге дейін жеткізу.", loc: "Апартаменттер" }
+            ]},
+            { date: "14 мамыр", code: "C-4", events: [
+                { time: "Шеберлік сабақтарға дейін", title: "Сарапшылардың, қатысушылардың және шақырылған қонақтардың шеберлік сабақтары өтетін алаңдарға келуі", loc: "Ж. Жабаев, 144 / Ж. Жабаев, 175 / Ж. Тәшенов, 115" },
+                { time: "11.00-13.00", title: "«Электроника» — Methods of training competitors in WorldSkills International countries", loc: "Ж. Жабаев көшесі, 144" },
+                { time: "10.00-13.00", title: "«Прототиптеу» — Using alternative software. Autodesk Inventor for modeling and assembly", loc: "Ж. Жабаев көшесі, 175" },
+                { time: "09.00-13.00", title: "«Ұшқышсыз ұшу жүйелері» — Assembly and initial configuration of the WS500 UAV kit", loc: "Ж. Тәшенов көшесі, 115" },
+                { time: "13.00-14.00", title: "Түскі үзіліс", loc: "Алаңдар" },
+                { time: "14.00-17.00", title: "«Электроника» — From WorldSkills standards to a manufacturing product", loc: "Ж. Жабаев көшесі, 144" },
+                { time: "14.00-16.00", title: "«Автономды мобильді робототехника» — Innovations in the structure and principles of the modules of the WSC2026 test project", loc: "Ж. Жабаев көшесі, 144" },
+                { time: "17.00-19.00", title: "«Автономды мобильді робототехника» — Advantages and features of using the ROS2 ecosystem", loc: "Ж. Жабаев көшесі, 144" },
+                { time: "14.00-17.00", title: "«Прототиптеу» — Using alternative software. Autodesk Inventor for milling parts", loc: "Ж. Жабаев көшесі, 175" },
+                { time: "14.00-18.00", title: "«Ұшқышсыз ұшу жүйелері» — Programming of the autonomous control model of the WS500 UAV kit", loc: "Ж. Тәшенов көшесі, 115" },
+                { time: "18.00-19.00", title: "Сұрақ және жауап Studica Robotics", loc: "Алаңдар" }
+            ]},
+            { date: "15 мамыр", code: "C-3", events: [
+                { time: "Шеберлік сабақтарға дейін", title: "Сарапшылардың, қатысушылардың және шақырылған қонақтардың шеберлік сабақтары өтетін алаңдарға келуі", loc: "Алаңдар" },
+                { time: "10.00-13.00", title: "«Электроника» — Beyond the Competition but inside electronics: Designing 4-layer PCBs", loc: "Ж. Жабаев көшесі, 144" },
+                { time: "10.00-13.00", title: "«Автономды мобильді робототехника» — Using SLAM (Simultaneous Localization and Mapping) to visualize the field map", loc: "Ж. Жабаев көшесі, 144" },
+                { time: "10.00-13.00", title: "«Прототиптеу» — Economics and commercialization of serial prototype printing, assembly and parts analysis", loc: "Ж. Жабаев көшесі, 175" },
+                { time: "11.00-13.00", title: "«Ұшқышсыз ұшу жүйелері» — Designing an additional modular design for UAVs", loc: "Ж. Тәшенов көшесі, 115" },
+                { time: "13.00-14.00", title: "Түскі үзіліс", loc: "Алаңдар" },
+                { time: "14.00-17.00", title: "«Электроника» — Hardware Software: Firmware as a hardware diagnostic tool", loc: "Ж. Жабаев көшесі, 144" },
+                { time: "14.00-17.00", title: "«Автономды мобильді робототехника» — Creating machine vision algorithms using the ROS2 ecosystem", loc: "Ж. Жабаев көшесі, 144" },
+                { time: "14.00-17.00", title: "«Прототиптеу» — Alternative materials for the production of prototypes and products, design work and exchange of experience with partners", loc: "Ж. Жабаев көшесі, 175" },
+                { time: "14.00-16.00", title: "«Ұшқышсыз ұшу жүйелері» — Modification, customization and improvement of the WS500 UAV kit", loc: "Ж. Тәшенов көшесі, 115" },
+                { time: "16.30-17.30", title: "Сарапшылармен сұрақ-жауап, тәжірибе алмасу", loc: "Алаңдар" }
+            ]},
+            { date: "16 мамыр", code: "C-2", events: [
+                { time: "09.00-13.00", title: "Құзыреттер бойынша конкурстық алаңдармен танысу", loc: "Алаңдар" },
+                { time: "13.00-14.00", title: "Түскі үзіліс", loc: "Алаңдар" },
+                { time: "15.00-16.30", title: "«DOSTI Skills Kokshetau 2026» халықаралық достық салалық чемпионатының салтанатты ашылу рәсімі", loc: "Көкшетау" }
+            ]},
+            { date: "17 мамыр", code: "C-1", events: [
+                { time: "Бүкіл кезең", title: "Чемпионатқа қатысушылар, сарапшылар және қонақтар үшін Щучинск-Бурабай курорттық аймағында мәдени-ойын-сауық бағдарламасын ұйымдастыру", loc: "Бурабай" }
+            ]},
+            { date: "18 мамыр", code: "C1", events: [
+                { time: "09.00-13.00", title: "Құзыреттер бойынша брифингтер мен модульдерді (Day C1 SMP) өткізу", loc: "Алаңдар" },
+                { time: "13.00-14.00", title: "Түскі үзіліс", loc: "Алаңдар" },
+                { time: "14.00-18.30", title: "Құзыреттер бойынша брифингтер мен модульдерді (Дау С1 SMP) өткізу", loc: "Алаңдар" }
+            ]},
+            { date: "19 мамыр", code: "C2", events: [
+                { time: "08.30-13.00", title: "Құзыреттер бойынша брифингтер мен модульдерді (Day C2 SMP) өткізу", loc: "Алаңдар" },
+                { time: "13.00-14.00", title: "Түскі үзіліс", loc: "Алаңдар" },
+                { time: "14.00-19.00", title: "Құзыреттер бойынша брифингтер мен модульдерді (Day C1 SMP) өткізу", loc: "Алаңдар" },
+                { time: "15.00-16.00", title: "Республикалық онлайн-семинар «Жасанды интеллектті техникалық және кәсіптік білім беру (ТжКБ) жүйесінің дуальды білім беруіне және жоғары оқу орындарына интеграциялау»", loc: "Онлайн" }
+            ]},
+            { date: "20 мамыр", code: "C3", events: [
+                { time: "09.00-13.00", title: "Құзыреттер бойынша брифингтер мен модульдерді (Day C3 SMP) өткізу", loc: "Алаңдар" },
+                { time: "13.00-14.00", title: "Түскі үзіліс", loc: "Алаңдар" },
+                { time: "14.00-17.30", title: "Құзыреттер бойынша брифингтер мен модульдерді (Day C3 SMP) өткізу", loc: "Алаңдар" }
+            ]},
+            { date: "21 мамыр", code: "C+1", events: [
+                { time: "11.00-12.30", title: "«DOSTI Skills Kokshetau 2026» халықаралық достық салалық чемпионатының салтанатты жабылу рәсімі", loc: "Көкшетау" },
+                { time: "12.30-14.00", title: "Іс-шараға қатысушыларға арналған фуршет", loc: "Алаң" }
+            ]},
+            { date: "22 мамыр", code: "C+2", events: [
+                { time: "Бүкіл кезең", title: "Сарапшыларды, қатысушыларды және шақырылған қонақтарды шығарып салу", loc: "Трансфер" }
+            ]}
+        ]
+    },
+    en: {
+        days: [
+            { date: "May 12-13", code: "C-6/C-5", events: [
+                { time: "The entire period", title: "Arrival day for experts, participants, and invited guests. Meeting of international guests and transfer to the apartments", loc: "Apartments" }
+            ]},
+            { date: "May 14", code: "-4", events: [
+                { time: "Before the workshops begin", title: "Arrival of experts, participants, and invited guests at the venues for the master classes", loc: "144 Zh. Zhabayeva St. / 175 Zh. Zhabayeva St. / 115 Zh. Tashenova St." },
+                { time: "11:00 a.m.-1:00 p.m.", title: "Electronics — Methods of training competitors in WorldSkills International countries", loc: "144 Zh. Zhabayeva St." },
+                { time: "10:00 a.m.-1:00 p.m.", title: "Prototyping — Using alternative software: Autodesk Inventor for modeling and assembly", loc: "175 Zh. Zhabayeva St." },
+                { time: "9:00 a.m.-1:00 p.m.", title: "Unmanned Aerial Vehicles — Assembly and initial configuration of the WS500 UAV kit", loc: "115 Zh. Tashenova St." },
+                { time: "1:00 p.m.-2:00 p.m.", title: "Lunch break", loc: "Venues" },
+                { time: "2:00-5:00 p.m.", title: "Electronics — From WorldSkills standards to a manufactured product", loc: "144 Zh. Zhabayeva St." },
+                { time: "2:00-4:00 p.m.", title: "Autonomous Mobile Robotics — Innovations in the structure and principles of the modules of the WSC2026 test project", loc: "144 Zh. Zhabayeva St." },
+                { time: "5:00-7:00 p.m.", title: "Autonomous Mobile Robotics — Advantages and features of using the ROS2 ecosystem", loc: "144 Zh. Zhabayeva St." },
+                { time: "2:00-5:00 p.m.", title: "Prototyping — Using alternative software. Autodesk Inventor for milling parts", loc: "175 Zh. Zhabayeva St." },
+                { time: "2:00-6:00 p.m.", title: "Unmanned Aerial Vehicles — Programming the autonomous control model of the WS500 UAV kit", loc: "115 Zh. Tashenova St." },
+                { time: "6:00-7:00 p.m.", title: "Q&A with Studica Robotics", loc: "Venues" }
+            ]},
+            { date: "May 15", code: "C-3", events: [
+                { time: "Before the workshops begin", title: "Arrival of experts, participants, and invited guests at the master class venues", loc: "Venues" },
+                { time: "10:00 a.m.-1:00 p.m.", title: "Electronics — Beyond the Competition but Inside Electronics: Designing 4-Layer PCBs", loc: "144 Zh. Zhabayeva St." },
+                { time: "10:00 a.m.-1:00 p.m.", title: "Autonomous Mobile Robotics — Using SLAM (Simultaneous Localization and Mapping) to visualize the field map", loc: "144 Zh. Zhabayeva St." },
+                { time: "10:00 a.m.-1:00 p.m.", title: "Prototyping — Economics and commercialization of serial prototype printing, assembly, and parts analysis", loc: "175 Zh. Zhabayeva St." },
+                { time: "11:00 a.m.-1:00 p.m.", title: "Unmanned Aerial Vehicles — Designing an additional modular design for UAVs", loc: "115 Zh. Tashenova St." },
+                { time: "1:00-2:00 p.m.", title: "Lunch break", loc: "Venues" },
+                { time: "2:00-5:00 p.m.", title: "Electronics — Hardware Software: Firmware as a hardware diagnostic tool", loc: "144 Zh. Zhabayeva St." },
+                { time: "2:00-5:00 p.m.", title: "Autonomous Mobile Robotics — Creating machine vision algorithms using the ROS2 ecosystem", loc: "144 Zh. Zhabayeva St." },
+                { time: "2:00-5:00 p.m.", title: "Prototyping — Alternative materials for the production of prototypes and products, design work, and exchange of experience with partners", loc: "175 Zh. Zhabayeva St." },
+                { time: "2:00-4:00 p.m.", title: "Unmanned Aerial Vehicles — Modification, customization, and improvement of the WS500 UAV kit", loc: "115 Zh. Tashenova St." },
+                { time: "4:30-5:30 p.m.", title: "Q&A with experts, exchange of experience", loc: "Venues" }
+            ]},
+            { date: "May 16", code: "C-2", events: [
+                { time: "09.00-13.00", title: "An Introduction to the Competency-Based Assessment Platforms", loc: "Venues" },
+                { time: "1:00-2:00 p.m.", title: "Lunch break", loc: "Venues" },
+                { time: "3:00-4:30 p.m.", title: "The opening ceremony of the «DOSTI Skills Kokshetau 2026» International Friendly Industry Championship", loc: "Kokshetau" }
+            ]},
+            { date: "May 17", code: "C-1", events: [
+                { time: "The entire period", title: "Organization of a cultural and entertainment program, including a trip to the Shchuchinsk-Burabay resort area", loc: "Burabay" }
+            ]},
+            { date: "May 18", code: "C1", events: [
+                { time: "09.00-1:00 p.m.", title: "Conducting briefings and modules (Day C1 SMP) on competencies", loc: "Venues" },
+                { time: "1:00-2:00 p.m.", title: "Lunch break", loc: "Venues" },
+                { time: "2:00-6:30 p.m.", title: "Conducting briefings and modules (Day C1 SMP) on competencies (Electronics, Robotics, Prototyping, UAS)", loc: "Venues" }
+            ]},
+            { date: "May 19", code: "C2", events: [
+                { time: "08.30-1:00 p.m.", title: "Conducting briefings and modules (Day C2 SMP) on competencies", loc: "Venues" },
+                { time: "1:00-2:00 p.m.", title: "Lunch break", loc: "Venues" },
+                { time: "2:00-7:00 p.m.", title: "Conducting briefings and modules (Day C2 SMP) on competencies", loc: "Venues" },
+                { time: "3:00-4:00 p.m.", title: "National Online Seminar: «Integrating Artificial Intelligence into the Dual Education System of TVE and Higher Education Institutions»", loc: "Online" }
+            ]},
+            { date: "May 20", code: "C3", events: [
+                { time: "09.00-1:00 p.m.", title: "Conducting briefings and modules (Day C3 SMP) on competencies", loc: "Venues" },
+                { time: "1:00-2:00 p.m.", title: "Lunch break", loc: "Venues" },
+                { time: "2:00-5:30 p.m.", title: "Conducting briefings and modules (Day C3 SMP) on competencies", loc: "Venues" }
+            ]},
+            { date: "May 21", code: "C+1", events: [
+                { time: "11.00-12.30", title: "The closing ceremony of the «DOSTI Skills Kokshetau 2026» International Friendship Industry Championship", loc: "Kokshetau" },
+                { time: "12.30-2:00 p.m.", title: "A buffet for event participants", loc: "Venue" }
+            ]},
+            { date: "May 22", code: "C+2", events: [
+                { time: "The entire period", title: "The day of departure for experts, participants, and invited guests", loc: "Transfer" }
+            ]}
+        ]
+    }
+};
+
+    let currentLang = 'ru';
+    let currentDayIdx = 0;
+
+    function setLang(lang) {
+        currentLang = lang;
+        document.querySelectorAll('.lang-switch button').forEach(b => b.classList.remove('active'));
+        document.getElementById(`btn-${lang}`).classList.add('active');
+        renderTabs();
+        renderContent();
+    }
+
+    function renderTabs() {
+        const nav = document.getElementById('date-tabs');
+        nav.innerHTML = '';
+        scheduleData[currentLang].days.forEach((day, idx) => {
+            const btn = document.createElement('button');
+            btn.innerText = day.date;
+            if(idx === currentDayIdx) btn.className = 'active';
+            btn.onclick = () => {
+                currentDayIdx = idx;
+                renderTabs();
+                renderContent();
+            };
+            nav.appendChild(btn);
+        });
+    }
+
+    function renderContent() {
+        const container = document.getElementById('schedule-content');
+        const dayData = scheduleData[currentLang].days[currentDayIdx];
+        
+        if(!dayData) {
+            container.innerHTML = "Данные обновляются...";
+            return;
+        }
+
+        container.innerHTML = `<h3>${dayData.date} (Код: ${dayData.code})</h3>`;
+        dayData.events.forEach(ev => {
+            container.innerHTML += `
+                <div class="event-card">
+                    <span class="time">${ev.time}</span>
+                    <div class="title">${ev.title}</div>
+                    <div class="location">📍 ${ev.loc}</div>
+                </div>
+            `;
+        });
+    }
+
+    // Инициализация
+    renderTabs();
+    renderContent();
+</script>
+
+</body>
+</html>
