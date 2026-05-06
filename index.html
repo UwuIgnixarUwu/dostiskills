@@ -6,67 +6,152 @@
     <title>DOSTI Skills 2026</title>
     <style>
         :root {
-            --primary-blue: #003366; /* Темно-синий фон в стиле ваших предпочтений */
+            --primary-blue: #003366;
             --accent-gold: #ffd700;
             --text-white: #ffffff;
             --bg-light: #f4f4f4;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             margin: 0;
-            padding: 0;
             background-color: var(--bg-light);
-            color: #333;
         }
 
-        /* Шапка сайта */
+        /* ШАПКА */
         header {
-            background-color: var(--primary-blue);
+            background-image: url('sky.jpg'); 
+            background-size: cover;
+            background-position: center;
             color: var(--text-white);
-            padding: 20px;
-            text-align: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            padding: 40px 20px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .lang-switch {
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.5); 
+            z-index: 1;
+        }
+
+        .header-container {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 800px;
+            gap: 20px;
+        }
+
+        /* ГРУППА ТЕКСТА */
+        .title-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            line-height: 1;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+        }
+
+        .kokshetau-label {
+            font-size: 1.4em;
+            color: var(--accent-gold);
+            font-weight: bold;
+            margin-top: 5px;
+            text-transform: uppercase;
+        }
+
+        .program-label {
+            font-size: 0.8em;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            padding: 2px 12px;
+            border-radius: 4px;
             margin-top: 10px;
+            display: inline-block;
+            width: fit-content;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* РОБОТ */
+        .robot-photo {
+            width: 110px; 
+            height: 110px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 15px rgba(255,255,255,0.3));
+        }
+
+        /* НИЖНИЙ БАННЕР (ПОД РОБОТОМ И ТЕКСТОМ) */
+        .bottom-banner {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            font-size: 0.58em;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            line-height: 1.5;
+            text-transform: uppercase;
+        }
+
+        /* Навигация и Контент */
+        .lang-switch {
+            position: relative;
+            z-index: 2;
+            margin-top: 20px;
         }
 
         .lang-switch button {
-            background: transparent;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px);
             border: 1px solid white;
             color: white;
-            padding: 5px 10px;
-            border-radius: 4px;
+            padding: 6px 15px;
+            border-radius: 20px;
             cursor: pointer;
+            font-weight: bold;
         }
 
         .lang-switch button.active {
             background: var(--accent-gold);
-            color: var(--primary-blue);
+            color: #000;
             border-color: var(--accent-gold);
         }
 
-        /* Навигация по датам (Горизонтальный скролл для мобильных) */
         .date-nav {
             display: flex;
             overflow-x: auto;
             background: #fff;
             border-bottom: 1px solid #ddd;
-            white-space: nowrap;
-            -webkit-overflow-scrolling: touch;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .date-nav button {
-            flex: 0 0 auto;
             padding: 15px 20px;
             border: none;
             background: none;
             font-weight: bold;
             color: #666;
+            white-space: nowrap;
         }
 
         .date-nav button.active {
@@ -74,41 +159,40 @@
             border-bottom: 3px solid var(--primary-blue);
         }
 
-        /* Контент программы */
-        .container {
-            padding: 15px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
+        .container { padding: 20px; max-width: 800px; margin: 0 auto; }
         .event-card {
             background: white;
-            border-radius: 8px;
+            border-radius: 10px;
             padding: 15px;
             margin-bottom: 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            border-left: 5px solid var(--primary-blue);
         }
-
-        .time {
-            font-weight: bold;
-            color: var(--primary-blue);
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .location {
-            font-size: 0.9em;
-            color: #d9534f;
-            margin-top: 5px;
-        }
-
-        .hidden { display: none; }
+        .time { font-weight: bold; color: var(--primary-blue); }
+        .location { color: #d9534f; font-size: 0.9em; margin-top: 5px; }
     </style>
 </head>
 <body>
 
 <header>
-    <h1 id="main-title">DOSTI Skills 2026</h1>
+    <!-- Верхний блок: Надписи + Робот -->
+    <div class="header-container">
+        <div class="title-group">
+            <h1>DOSTI Skills</h1>
+            <div class="kokshetau-label">Kokshetau 2026</div>
+            <div class="program-label">PROGRAM</div>
+        </div>
+        
+        <img src="robot.png" alt="Robot" class="robot-photo">
+    </div>
+
+    <!-- Нижняя надпись под всем классом -->
+    <div class="bottom-banner">
+        ХАЛЫҚАРАЛЫҚ САЛАЛЫҚ ЧЕМПИОНАТЫ -
+        INTERNATIONAL INDUSTRY CHAMPIONSHIP
+    </div>
+    
+    <!-- Переключатель языков -->
     <div class="lang-switch">
         <button onclick="setLang('ru')" id="btn-ru" class="active">RU</button>
         <button onclick="setLang('kz')" id="btn-kz">KZ</button>
@@ -116,18 +200,24 @@
     </div>
 </header>
 
-<nav class="date-nav" id="date-tabs">
-    <!-- Кнопки дат генерируются скриптом -->
-</nav>
-
-<div class="container" id="schedule-content">
-    <!-- Сюда подгружается программа -->
-</div>
+<nav class="date-nav" id="date-tabs"></nav>
+<div class="container" id="schedule-content"></div>
 
 <script>
-    // 1. ДАННЫЕ (Вы можете дополнять этот массив информацией из PDF)
+    // Словарь: "Название в расписании": "Ссылка на карты"
+const addressLinks = {
+    "ул. Ж. Жабаева, 144": "https://maps.app.goo.gl/q1L7y37YrQ2Unsaq6",
+    "ул. Ж. Жабаева, 175": "https://maps.app.goo.gl/N5iEbTb3UHezLJpR8",
+    "ул. Ж. Ташенова, 115": "https://maps.app.goo.gl/9ZxFTzLn2tzusYch8",
+    "Ж. Жабаев көшесі, 144": "https://maps.app.goo.gl/q1L7y37YrQ2Unsaq6",
+    "Ж. Жабаев көшесі, 175": "https://maps.app.goo.gl/N5iEbTb3UHezLJpR8",
+    "Ж. Тәшенов көшесі, 115": "https://maps.app.goo.gl/9ZxFTzLn2tzusYch8",
+    "144 Zh. Zhabayeva St.": "https://maps.app.goo.gl/q1L7y37YrQ2Unsaq6",
+    "175 Zh. Zhabayeva St.": "https://maps.app.goo.gl/N5iEbTb3UHezLJpR8",
+    "115 Zh. Tashenova St.": "https://maps.app.goo.gl/9ZxFTzLn2tzusYch8",
+};
     const scheduleData = {
-    ru: {
+        ru: {
         days: [
             { date: "12-13 мая", code: "C-6/C-5", events: [
                 { time: "Весь период", title: "День прибытия экспертов, участников и приглашённых гостей. Встреча иностранных гостей и трансфера до апартаментов", loc: "Апартаменты" }
@@ -168,42 +258,42 @@
             ]},
             { date: "18 мая", code: "C1", events: [
                 { time: "09.00-13.00", title: "Проведение брифингов, модулей (Day C1 SMP) по компетенциям", loc: "Площадки" },
-                { time: "09.00-13.00", title: "Электроника", loc: "Площадки" },
-                { time: "10.00-13.00", title: "Автономная мобильная робототехника", loc: "Площадки" },
-                { time: "09.00-13.00", title: "Прототипирование", loc: "Площадки" },
-                { time: "09.00-13.00", title: "«Беспилотные летательные системы", loc: "Площадки" },
+                { time: "09.00-13.00", title: "Электроника", loc: "ул. Ж. Жабаева, 144" },
+                { time: "10.00-13.00", title: "Автономная мобильная робототехника", loc: "ул. Ж. Жабаева, 144" },
+                { time: "09.00-13.00", title: "Прототипирование", loc: "ул. Ж. Жабаева, 175" },
+                { time: "09.00-13.00", title: "«Беспилотные летательные системы", loc: "ул. Ж. Ташенова, 115" },
                 { time: "13.00-14.00", title: "Обеденный перерыв", loc: "Площадки" },
                 { time: "14.00-18.30", title: "Проведение брифингов, модулей (Day C1 SMP) по компетенциям", loc: "Площадки" },
-                { time: "14.00-17.30", title: "Электроника", loc: "Площадки" },
-                { time: "14.00-18.30", title: "Автономная мобильная робототехника", loc: "Площадки" },
-                { time: "14.00-17.30", title: "Прототипирование", loc: "Площадки" },
-                { time: "14.00-18.30", title: "«Беспилотные летательные системы", loc: "Площадки" },
+                { time: "14.00-17.30", title: "Электроника", loc: "ул. Ж. Жабаева, 144" },
+                { time: "14.00-18.30", title: "Автономная мобильная робототехника", loc: "ул. Ж. Жабаева, 144" },
+                { time: "14.00-17.30", title: "Прототипирование", loc: "ул. Ж. Жабаева, 175" },
+                { time: "14.00-18.30", title: "«Беспилотные летательные системы", loc: "ул. Ж. Ташенова, 115" },
             ]},
             { date: "19 мая", code: "C2", events: [
                 { time: "08.30-13.00", title: "Проведение брифингов, модулей (Day C2 SMP) по компетенциям", loc: "Площадки" },
-                { time: "09.00-13.00", title: "Электроника", loc: "Площадки" },
-                { time: "08.30-13.00", title: "Автономная мобильная робототехника", loc: "Площадки" },
-                { time: "08.30-13.00", title: "Прототипирование", loc: "Площадки" },
-                { time: "09.00-13.00", title: "«Беспилотные летательные системы", loc: "Площадки" },
+                { time: "09.00-13.00", title: "Электроника", loc: "ул. Ж. Жабаева, 144" },
+                { time: "08.30-13.00", title: "Автономная мобильная робототехника", loc: "ул. Ж. Жабаева, 144" },
+                { time: "08.30-13.00", title: "Прототипирование", loc: "ул. Ж. Жабаева, 175" },
+                { time: "09.00-13.00", title: "«Беспилотные летательные системы", loc: "ул. Ж. Ташенова, 115" },
                 { time: "13.00-14.00", title: "Обеденный перерыв", loc: "Площадки" },
                 { time: "14.00-19.00", title: "Проведение брифингов, модулей (Day C2 SMP) по компетенциям", loc: "Площадки" },
-                { time: "14.00-17.30", title: "Электроника", loc: "Площадки" },
-                { time: "14.00-18.30", title: "Автономная мобильная робототехника", loc: "Площадки" },
-                { time: "14.00-19.00", title: "Прототипирование", loc: "Площадки" },
-                { time: "14.00-16.30", title: "«Беспилотные летательные системы", loc: "Площадки" },
+                { time: "14.00-17.30", title: "Электроника", loc: "ул. Ж. Жабаева, 144" },
+                { time: "14.00-18.30", title: "Автономная мобильная робототехника", loc: "ул. Ж. Жабаева, 144" },
+                { time: "14.00-19.00", title: "Прототипирование", loc: "ул. Ж. Жабаева, 175" },
+                { time: "14.00-16.30", title: "«Беспилотные летательные системы", loc: "ул. Ж. Ташенова, 115" },
                 { time: "15.00-16.00", title: "Республиканский онлайн-семинар «Интеграция искусственного интеллекта в дуальное образование систем ТиПО и высших учебных заведений»", loc: "Онлайн" }
             ]},
             { date: "20 мая", code: "C3", events: [
                 { time: "09.00-13.00", title: "Проведение брифингов, модулей (Day C3 SMP) по компетенциям", loc: "Площадки" },
-                { time: "09.00-13.00", title: "Электроника", loc: "Площадки" },
-                { time: "09.00-13.00", title: "Автономная мобильная робототехника", loc: "Площадки" },
-                { time: "10.00-13.00", title: "Прототипирование", loc: "Площадки" },
-                { time: "09.00-13.00", title: "«Беспилотные летательные системы", loc: "Площадки" },
+                { time: "09.00-13.00", title: "Электроника", loc: "ул. Ж. Жабаева, 144" },
+                { time: "09.00-13.00", title: "Автономная мобильная робототехника", loc: "ул. Ж. Жабаева, 144" },
+                { time: "10.00-13.00", title: "Прототипирование", loc: "ул. Ж. Жабаева, 175" },
+                { time: "09.00-13.00", title: "«Беспилотные летательные системы", loc: "ул. Ж. Ташенова, 115" },
                 { time: "13.00-14.00", title: "Обеденный перерыв", loc: "Площадки" },
                 { time: "14.00-17.30", title: "Проведение брифингов, модулей (Day C3 SMP) по компетенциям", loc: "Площадки" },
-                { time: "14.00-17.30", title: "Электроника", loc: "Площадки" },
-                { time: "14.00-17.00", title: "Автономная мобильная робототехника", loc: "Площадки" },
-                { time: "14.00-16.30", title: "Прототипирование", loc: "Площадки" },
+                { time: "14.00-17.30", title: "Электроника", loc: "ул. Ж. Жабаева, 144" },
+                { time: "14.00-17.00", title: "Автономная мобильная робототехника", loc: "ул. Ж. Жабаева, 144" },
+                { time: "14.00-16.30", title: "Прототипирование", loc: "ул. Ж. Жабаева, 175" },
             ]},
             { date: "21 мая", code: "C+1", events: [
                 { time: "11.00-12.30", title: "Торжественная церемония закрытия Международного Товарищеского Отраслевого чемпионата «DOSTI Skills Kokshetau 2026»", loc: "Көкшетау" },
@@ -255,42 +345,42 @@
             ]},
             { date: "18 мамыр", code: "C1", events: [
                 { time: "09.00-13.00", title: "Құзыреттер бойынша брифингтер мен модульдерді (Day C1 SMP) өткізу", loc: "Алаңдар" },
-                { time: "09.00-13.00", title: "Электроника", loc: "Алаңдар" },
-                { time: "10.00-13.00", title: "Автономды мобильді робототехника", loc: "Алаңдар" },
-                { time: "09.00-13.00", title: "Прототиптеу", loc: "Алаңдар" },
-                { time: "09.00-13.00", title: "Ұшқышсыз ұшу жүйелері", loc: "Алаңдар" },
+                { time: "09.00-13.00", title: "Электроника", loc: "Ж. Жабаев көшесі, 144" },
+                { time: "10.00-13.00", title: "Автономды мобильді робототехника", loc: "Ж. Жабаев көшесі, 144" },
+                { time: "09.00-13.00", title: "Прототиптеу", loc: "Ж. Жабаев көшесі, 175" },
+                { time: "09.00-13.00", title: "Ұшқышсыз ұшу жүйелері", loc: "Ж. Тәшенов көшесі, 115" },
                 { time: "13.00-14.00", title: "Түскі үзіліс", loc: "Алаңдар" },
                 { time: "14.00-18.30", title: "Құзыреттер бойынша брифингтер мен модульдерді (Дау С1 SMP) өткізу", loc: "Алаңдар" },
-                { time: "14.00-17.30", title: "Электроника", loc: "Алаңдар" },
-                { time: "14.00-18.30", title: "Автономды мобильді робототехника", loc: "Алаңдар" },
-                { time: "14.00-17.30", title: "Прототиптеу", loc: "Алаңдар" },
-                { time: "14.00-18.30", title: "Ұшқышсыз ұшу жүйелері", loc: "Алаңдар" },
+                { time: "14.00-17.30", title: "Электроника", loc: "Ж. Жабаев көшесі, 144" },
+                { time: "14.00-18.30", title: "Автономды мобильді робототехника", loc: "Ж. Жабаев көшесі, 144" },
+                { time: "14.00-17.30", title: "Прототиптеу", loc: "Ж. Жабаев көшесі, 175" },
+                { time: "14.00-18.30", title: "Ұшқышсыз ұшу жүйелері", loc: "Ж. Тәшенов көшесі, 115" },
             ]},
             { date: "19 мамыр", code: "C2", events: [
                 { time: "08.30-13.00", title: "Құзыреттер бойынша брифингтер мен модульдерді (Day C2 SMP) өткізу", loc: "Алаңдар" },
-                { time: "09.00-13.00", title: "Электроника", loc: "Алаңдар" },
-                { time: "08.30-13.00", title: "Автономды мобильді робототехника", loc: "Алаңдар" },
-                { time: "08.30-13.00", title: "Прототиптеу", loc: "Алаңдар" },
-                { time: "09.00-13.00", title: "Ұшқышсыз ұшу жүйелері", loc: "Алаңдар" },
+                { time: "09.00-13.00", title: "Электроника", loc: "Ж. Жабаев көшесі, 144" },
+                { time: "08.30-13.00", title: "Автономды мобильді робототехника", loc: "Ж. Жабаев көшесі, 144" },
+                { time: "08.30-13.00", title: "Прототиптеу", loc: "Ж. Жабаев көшесі, 175" },
+                { time: "09.00-13.00", title: "Ұшқышсыз ұшу жүйелері", loc: "Ж. Тәшенов көшесі, 115" },
                 { time: "13.00-14.00", title: "Түскі үзіліс", loc: "Алаңдар" },
                 { time: "14.00-19.00", title: "Құзыреттер бойынша брифингтер мен модульдерді (Day C1 SMP) өткізу", loc: "Алаңдар" },
-                { time: "14.00-17.30", title: "Электроника", loc: "Алаңдар" },
-                { time: "14.00-18.30", title: "Автономды мобильді робототехника", loc: "Алаңдар" },
-                { time: "14.00-19.00", title: "Прототиптеу", loc: "Алаңдар" },
-                { time: "14.00-16.30", title: "Ұшқышсыз ұшу жүйелері", loc: "Алаңдар" },
+                { time: "14.00-17.30", title: "Электроника", loc: "Ж. Жабаев көшесі, 144" },
+                { time: "14.00-18.30", title: "Автономды мобильді робототехника", loc: "Ж. Жабаев көшесі, 144" },
+                { time: "14.00-19.00", title: "Прототиптеу", loc: "Ж. Жабаев көшесі, 175" },
+                { time: "14.00-16.30", title: "Ұшқышсыз ұшу жүйелері", loc: "Ж. Тәшенов көшесі, 115" },
                 { time: "15.00-16.00", title: "Республикалық онлайн-семинар «Жасанды интеллектті техникалық және кәсіптік білім беру (ТжКБ) жүйесінің дуальды білім беруіне және жоғары оқу орындарына интеграциялау»", loc: "Онлайн" }
             ]},
             { date: "20 мамыр", code: "C3", events: [
                 { time: "09.00-13.00", title: "Құзыреттер бойынша брифингтер мен модульдерді (Day C3 SMP) өткізу", loc: "Алаңдар" },
-                { time: "09.00-13.00", title: "Электроника", loc: "Алаңдар" },
-                { time: "09.00-13.00", title: "Автономды мобильді робототехника", loc: "Алаңдар" },
-                { time: "10.00-13.00", title: "Прототиптеу", loc: "Алаңдар" },
-                { time: "09.00-13.00", title: "Ұшқышсыз ұшу жүйелері", loc: "Алаңдар" },
+                { time: "09.00-13.00", title: "Электроника", loc: "Ж. Жабаев көшесі, 144" },
+                { time: "09.00-13.00", title: "Автономды мобильді робототехника", loc: "Ж. Жабаев көшесі, 144" },
+                { time: "10.00-13.00", title: "Прототиптеу", loc: "Ж. Жабаев көшесі, 175" },
+                { time: "09.00-13.00", title: "Ұшқышсыз ұшу жүйелері", loc: "Ж. Тәшенов көшесі, 115" },
                 { time: "13.00-14.00", title: "Түскі үзіліс", loc: "Алаңдар" },
                 { time: "14.00-17.30", title: "Құзыреттер бойынша брифингтер мен модульдерді (Day C3 SMP) өткізу", loc: "Алаңдар" },
-                 { time: "14.00-17.30", title: "Электроника", loc: "Алаңдар" },
-                { time: "14.00-17.00", title: "Автономды мобильді робототехника", loc: "Алаңдар" },
-                { time: "14.00-16.30", title: "Прототиптеу", loc: "Алаңдар" },
+                 { time: "14.00-17.30", title: "Электроника", loc: "Ж. Жабаев көшесі, 144" },
+                { time: "14.00-17.00", title: "Автономды мобильді робототехника", loc: "Ж. Жабаев көшесі, 144" },
+                { time: "14.00-16.30", title: "Прототиптеу", loc: "Ж. Жабаев көшесі, 175" },
             ]},
             { date: "21 мамыр", code: "C+1", events: [
                 { time: "11.00-12.30", title: "«DOSTI Skills Kokshetau 2026» халықаралық достық салалық чемпионатының салтанатты жабылу рәсімі", loc: "Көкшетау" },
@@ -342,42 +432,42 @@
             ]},
             { date: "May 18", code: "C1", events: [
                 { time: "09.00 a.m.-1:00 p.m.", title: "Conducting briefings and modules (Day C1 SMP) on competencies", loc: "Venues" },
-                { time: "09.00 a.m.-1:00 p.m.", title: "Electronics", loc: "Venues" },
-                { time: "10.00 a.m.-1:00 p.m.", title: "Autonomous Mobile Robotics", loc: "Venues" },
-                { time: "09.00 a.m.-1:00 p.m.", title: "Prototyping", loc: "Venues" },
-                { time: "09.00 a.m.-1:00 p.m.", title: "Unmanned Aerial Systems", loc: "Venues" },
+                { time: "09.00 a.m.-1:00 p.m.", title: "Electronics", loc: "144 Zh. Zhabayeva St." },
+                { time: "10.00 a.m.-1:00 p.m.", title: "Autonomous Mobile Robotics", loc: "144 Zh. Zhabayeva St." },
+                { time: "09.00 a.m.-1:00 p.m.", title: "Prototyping", loc: "175 Zh. Zhabayeva St." },
+                { time: "09.00 a.m.-1:00 p.m.", title: "Unmanned Aerial Systems", loc: "115 Zh. Tashenova St." },
                 { time: "1:00-2:00 p.m.", title: "Lunch break", loc: "Venues" },
                 { time: "2.00-6:30 p.m.", title: "Conducting briefings and modules (Day C1 SMP) on competencies", loc: "Venues" },
-                { time: "2.00 p.m.-5:30 p.m.", title: "Electronics", loc: "Venues" },
-                { time: "2.00 p.m.-6:30 p.m.", title: "Autonomous Mobile Robotics", loc: "Venues" },
-                { time: "2.00 p.m.-5:30 p.m.", title: "Prototyping", loc: "Venues" },
-                { time: "2.00 p.m.-6:30 p.m.", title: "Unmanned Aerial Systems", loc: "Venues" },
+                { time: "2.00 p.m.-5:30 p.m.", title: "Electronics", loc: "144 Zh. Zhabayeva St." },
+                { time: "2.00 p.m.-6:30 p.m.", title: "Autonomous Mobile Robotics", loc: "144 Zh. Zhabayeva St." },
+                { time: "2.00 p.m.-5:30 p.m.", title: "Prototyping", loc: "175 Zh. Zhabayeva St." },
+                { time: "2.00 p.m.-6:30 p.m.", title: "Unmanned Aerial Systems", loc: "115 Zh. Tashenova St." },
             ]},
             { date: "May 19", code: "C2", events: [
                 { time: "8.30 a.m.-1:00 p.m.", title: "Conducting briefings and modules (Day C1 SMP) on competencies", loc: "Venues" },
-                { time: "09.00 a.m.-1:00 p.m.", title: "Electronics", loc: "Venues" },
-                { time: "08.30 a.m.-1:00 p.m.", title: "Autonomous Mobile Robotics", loc: "Venues" },
-                { time: "08.30 a.m.-1:00 p.m.", title: "Prototyping", loc: "Venues" },
-                { time: "09.00 a.m.-1:00 p.m.", title: "Unmanned Aerial Systems", loc: "Venues" },
+                { time: "09.00 a.m.-1:00 p.m.", title: "Electronics", loc: "144 Zh. Zhabayeva St." },
+                { time: "08.30 a.m.-1:00 p.m.", title: "Autonomous Mobile Robotics", loc: "144 Zh. Zhabayeva St." },
+                { time: "08.30 a.m.-1:00 p.m.", title: "Prototyping", loc: "175 Zh. Zhabayeva St." },
+                { time: "09.00 a.m.-1:00 p.m.", title: "Unmanned Aerial Systems", loc: "115 Zh. Tashenova St." },
                 { time: "1:00-2:00 p.m.", title: "Lunch break", loc: "Venues" },
                 { time: "2.00-6:30 p.m.", title: "Conducting briefings and modules (Day C1 SMP) on competencies", loc: "Venues" },
-                { time: "2.00 p.m.-5:30 p.m.", title: "Electronics", loc: "Venues" },
-                { time: "2.00 p.m.-6:30 p.m.", title: "Autonomous Mobile Robotics", loc: "Venues" },
-                { time: "2.00 p.m.-7:00 p.m.", title: "Prototyping", loc: "Venues" },
-                { time: "2.00 p.m.-4:30 p.m.", title: "Unmanned Aerial Systems", loc: "Venues" },
+                { time: "2.00 p.m.-5:30 p.m.", title: "Electronics", loc: "144 Zh. Zhabayeva St." },
+                { time: "2.00 p.m.-6:30 p.m.", title: "Autonomous Mobile Robotics", loc: "144 Zh. Zhabayeva St." },
+                { time: "2.00 p.m.-7:00 p.m.", title: "Prototyping", loc: "175 Zh. Zhabayeva St." },
+                { time: "2.00 p.m.-4:30 p.m.", title: "Unmanned Aerial Systems", loc: "115 Zh. Tashenova St." },
                 { time: "3:00-4:00 p.m.", title: "National Online Seminar: «Integrating Artificial Intelligence into the Dual Education System of TVE and Higher Education Institutions»", loc: "Online" }
             ]},
             { date: "May 20", code: "C3", events: [
                 { time: "09.00-1:00 p.m.", title: "Conducting briefings and modules (Day C3 SMP) on competencies", loc: "Venues" },
-                { time: "09.00 a.m.-1:00 p.m.", title: "Electronics", loc: "Venues" },
-                { time: "09.00 a.m.-1:00 p.m.", title: "Autonomous Mobile Robotics", loc: "Venues" },
-                { time: "10.00 a.m.-1:00 p.m.", title: "Prototyping", loc: "Venues" },
-                { time: "09.00 a.m.-1:00 p.m.", title: "Unmanned Aerial Systems", loc: "Venues" },
+                { time: "09.00 a.m.-1:00 p.m.", title: "Electronics", loc: "144 Zh. Zhabayeva St." },
+                { time: "09.00 a.m.-1:00 p.m.", title: "Autonomous Mobile Robotics", loc: "144 Zh. Zhabayeva St." },
+                { time: "10.00 a.m.-1:00 p.m.", title: "Prototyping", loc: "175 Zh. Zhabayeva St." },
+                { time: "09.00 a.m.-1:00 p.m.", title: "Unmanned Aerial Systems", loc: "115 Zh. Tashenova St." },
                 { time: "1:00-2:00 p.m.", title: "Lunch break", loc: "Venues" },
                 { time: "2:00 p.m.-5:30 p.m.", title: "Conducting briefings and modules (Day C3 SMP) on competencies", loc: "Venues" },
-                { time: "2.00 p.m.-5:30 p.m.", title: "Electronics", loc: "Venues" },
-                { time: "2.00 p.m.-5:00 p.m.", title: "Autonomous Mobile Robotics", loc: "Venues" },
-                { time: "2.00 p.m.-4:30 p.m.", title: "Prototyping", loc: "Venues" },
+                { time: "2.00 p.m.-5:30 p.m.", title: "Electronics", loc: "144 Zh. Zhabayeva St." },
+                { time: "2.00 p.m.-5:00 p.m.", title: "Autonomous Mobile Robotics", loc: "144 Zh. Zhabayeva St." },
+                { time: "2.00 p.m.-4:30 p.m.", title: "Prototyping", loc: "175 Zh. Zhabayeva St." },
             ]},
             { date: "May 21", code: "C+1", events: [
                 { time: "11.00-12.30", title: "The closing ceremony of the «DOSTI Skills Kokshetau 2026» International Friendship Industry Championship", loc: "Kokshetau" },
@@ -388,7 +478,7 @@
             ]}
         ]
     }
-};
+    };
 
     let currentLang = 'ru';
     let currentDayIdx = 0;
@@ -408,11 +498,7 @@
             const btn = document.createElement('button');
             btn.innerText = day.date;
             if(idx === currentDayIdx) btn.className = 'active';
-            btn.onclick = () => {
-                currentDayIdx = idx;
-                renderTabs();
-                renderContent();
-            };
+            btn.onclick = () => { currentDayIdx = idx; renderTabs(); renderContent(); };
             nav.appendChild(btn);
         });
     }
@@ -420,25 +506,28 @@
     function renderContent() {
         const container = document.getElementById('schedule-content');
         const dayData = scheduleData[currentLang].days[currentDayIdx];
-        
-        if(!dayData) {
-            container.innerHTML = "Данные обновляются...";
-            return;
-        }
-
         container.innerHTML = `<h3>${dayData.date} (Код: ${dayData.code})</h3>`;
+        
         dayData.events.forEach(ev => {
+            const locText = ev.loc.trim();
+            
+            // Проверяем, есть ли этот адрес в нашем словаре
+            // Если есть — берем готовую ссылку, если нет — оставляем просто текст
+            const manualUrl = addressLinks[locText];
+
+            const locationHTML = manualUrl 
+                ? `<a href="${manualUrl}" target="_blank" style="text-decoration:none; color:inherit; display:block;">📍 ${locText}</a>`
+                : `📍 ${locText}`;
+
             container.innerHTML += `
                 <div class="event-card">
                     <span class="time">${ev.time}</span>
                     <div class="title">${ev.title}</div>
-                    <div class="location">📍 ${ev.loc}</div>
-                </div>
-            `;
+                    <div class="location">${locationHTML}</div>
+                </div>`;
         });
     }
 
-    // Инициализация
     renderTabs();
     renderContent();
 </script>
